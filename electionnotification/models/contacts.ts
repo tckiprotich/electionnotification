@@ -1,6 +1,12 @@
 import mongoose from "mongoose";
 import { Schema } from "mongoose";
 
+interface IContact extends Document {
+    name: string,
+    email: string,
+    phone: string
+}
+
 
 const contactSchema = new Schema({
     name: { type: String, required: true },
@@ -8,5 +14,15 @@ const contactSchema = new Schema({
     phone: { type: String, required: true }
 });
 
-const Contacts = mongoose.model("MyBooks", contactSchema);
+let Contacts;
+
+if (mongoose.models.Contacts) {
+    Contacts = mongoose.model('Contacts');
+}
+else {
+    Contacts = mongoose.model('Contacts', contactSchema);
+}
+
+
+
 export default Contacts;
