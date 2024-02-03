@@ -52,7 +52,7 @@ export default function Upload() {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center h-screen bg-gray-950">
+        <div className="flex flex-col items-center justify-center bg-gray-950">
             <div className="py-4 px-8 bg-gray-900 shadow-lg rounded-lg my-20">
                 <div className="mt-4">
                     <label htmlFor="formFile" className="text-xl font-bold mb-2">Upload CSV with Contacts</label>
