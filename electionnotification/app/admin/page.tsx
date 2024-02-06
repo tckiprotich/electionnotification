@@ -1,6 +1,7 @@
 import React from "react";
 import Upload from '../../components/uploa'
 import Create from '../../components/create'
+import List from '../../components/list'
 function Index() {
     return (
         <>
@@ -13,10 +14,10 @@ function Index() {
                 <Create />
                 {/* Remove class [ h-24 ] when adding a card block */}
                 {/* Remove class [ border-gray-300  dark:border-gray-700 border-dashed border-2 ] to remove dotted border */}
-                <div className="rounded border-gray-300  dark:border-gray-700 border-dashed border-2 h-24" />
+                <List />
                 {/* Remove class [ h-24 ] when adding a card block */}
                 {/* Remove class [ border-gray-300  dark:border-gray-700 border-dashed border-2 ] to remove dotted border */}
-                <div className="rounded border-gray-300  dark:border-gray-700 border-dashed border-2 h-24" />
+                {/* <div className="rounded border-gray-300  dark:border-gray-700 border-dashed border-2 h-24" /> */}
             </div>
         </>
     );

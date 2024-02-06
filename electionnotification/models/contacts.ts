@@ -22,7 +22,4 @@ if (mongoose.models.Contacts) {
 else {
     Contacts = mongoose.model('Contacts', contactSchema);
 }
-
-
-
 export default Contacts;

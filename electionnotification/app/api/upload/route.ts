@@ -1,6 +1,6 @@
+// @ts-nocheck
 import { NextResponse } from "next/server";
 import connectDB from "@/utils/connect.mongo";
-// @ts-ignore
 import ContactModel from '../../../models/contacts'
 
 interface IContact extends Document {
@@ -13,13 +13,19 @@ interface IContact extends Document {
 export async function POST(req: Request, res: NextResponse) {
     // Get the file from the request
     const file = await req.json();
-    console.log(file);
 
     // Connect to the database
     await connectDB();
 
     // Create a new contact
     for (const record of file) {
+        // Check if phone number already exists
+        const existingContact = await ContactModel.findOne({ phone: record.phone });
+        if (existingContact) {
+            console.log(`Phone number ${record.phone} already exists`);
+            continue; // Skip this iteration and move on to the next record
+        }
+
         // @ts-ignore
         const contact = new ContactModel(record);
         console.log(contact);
@@ -33,5 +39,4 @@ export async function POST(req: Request, res: NextResponse) {
         }
     }
     return NextResponse.json({ message: "File uploaded successfully" });
-
 };
