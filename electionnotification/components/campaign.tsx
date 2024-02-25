@@ -32,7 +32,7 @@ export default function Example() {
     }
     // redirect to /home
     alert("Campaigns", response)
-    window.location.href = '/admin';
+   // window.location.href = '/admin';
 
   };
 
