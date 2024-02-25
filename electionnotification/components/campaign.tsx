@@ -31,7 +31,7 @@ export default function Example() {
       console.error('Failed to submit campaign');
     }
     // redirect to /home
-    console.log("Campaigns", response)
+    alert("Campaigns", response)
     window.location.href = '/admin';
 
   };
