@@ -11,11 +11,11 @@ export default function Create() {
                     <label htmlFor="formFile" className="text-xl font-bold mb-2"> Upload a contact csv file </label>
 
                 </div>
-                <Link href="/upload">
+                <Link href="/contacts">
                     <button
                         className='bg-indigo-600 text-white px-4 py-2 rounded-md mt-4 hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
                     >
-                        Upload csv
+                        Add contacts
                     </button>
                 </Link>
             </div>
