@@ -87,7 +87,7 @@ export async function POST(req: Request, res: NextResponse) {
 
     req.end();
 
-    return NextResponse.json({ message: "New Campaign created" });
+    return NextResponse.json({ message: "New Campaign created", campaign });
 }
 
 
