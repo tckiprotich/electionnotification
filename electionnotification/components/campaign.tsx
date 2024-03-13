@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 // @ts-ignore
 import { Switch } from '@heroicons/react'
+import { UserButton } from "@clerk/nextjs";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
@@ -32,12 +33,15 @@ export default function Example() {
     }
     // redirect to /home
     console.log("New campaign Response", response)
-   window.location.href = '/admin';
+  //  window.location.href = '/admin';
 
   };
 
   return (
     <div className="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
+      <div className="h-screen">
+      <UserButton />
+    </div>
       <div
         className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]"
         aria-hidden="true"

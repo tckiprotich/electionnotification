@@ -5,8 +5,7 @@ var https = require('follow-redirects').https;
 var fs = require('fs');
 import Contactsmodel from '../../../models/contacts'
 import CampaignModel from '../../../models/campain'
-
-
+import { currentUser, auth } from "@clerk/nextjs";
 
 /**
  * Handles the POST request for creating a new campaign.
@@ -16,30 +15,36 @@ import CampaignModel from '../../../models/campain'
  * @returns A JSON response indicating the success of the operation.
  */
 export async function POST(req: Request, res: NextResponse) {
+    console.log("New Campaign Request")
+    
     // Get the file from the request
     const file = await req.json();
     console.log(file);
 
     // Connect to the database
     await connectDB();
+    const user = await currentUser();
+    const { FName, LName } = { FName: user.firstName, LName: user.lastName}
 
     const { name, description, status } = { name: file.campaign, description: file.message, status: file.about }
     console.log(name, description, status);
 
     // Create a new campaign
-    const campaign = new CampaignModel({ name, description, status });
+    const campaign = new CampaignModel({ name, description, status, sentBy: `${FName} ${LName}` });
     await campaign.save();
     console.log("Campaign saved successfully");
-
-
-
 
     // get phone number for each user in Contacts
     const contacts = await Contactsmodel.find({});
 
+    // Create an array to store the recipients
+    const sentTo = [];
+
     //for each contact, send a message
     for (const contact of contacts) {
         console.log(contact.phone);
+        sentTo.push(contact.phone); // Add the recipient to the array
+
         var postData = JSON.stringify({
             "messages": [
                 {
@@ -83,14 +88,14 @@ export async function POST(req: Request, res: NextResponse) {
 
         req.end();
     }
-    req.write(postData);
 
-    req.end();
+    // Update the campaign with the recipients
+    campaign.sentTo = JSON.stringify(sentTo);
+    console.log(campaign, "Final Campaign");
+    await campaign.save();
 
     return NextResponse.json({ message: "New Campaign created", campaign });
 }
-
-
 
 export async function GET(req: Request, res: NextResponse) {
     // Connect to the database
