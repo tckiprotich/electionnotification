@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Upload from '../components/campaign'
+import "../utils/reminderScheduler"
 
 export default function Home() {
   return (

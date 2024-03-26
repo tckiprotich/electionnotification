@@ -15,24 +15,23 @@ import { currentUser, auth } from "@clerk/nextjs";
  * @returns A JSON response indicating the success of the operation.
  */
 export async function POST(req: Request, res: NextResponse) {
-    console.log("New Campaign Request")
-    
     // Get the file from the request
     const file = await req.json();
-    console.log(file);
+    console.log("Request Body", file);
 
     // Connect to the database
     await connectDB();
     const user = await currentUser();
-    const { FName, LName } = { FName: user.firstName, LName: user.lastName}
+    const { FName, LName } = { FName: user.firstName, LName: user.lastName }
 
-    const { name, description, status } = { name: file.campaign, description: file.message, status: file.about }
-    console.log(name, description, status);
+    const { name, description, status, recurrence, sendDateTime } = { name: file.campaign, description: file.message, status: file.about, recurrence: file.recurrence, sendDateTime: file.sendDateTime }
+
 
     // Create a new campaign
-    const campaign = new CampaignModel({ name, description, status, sentBy: `${FName} ${LName}` });
+    const campaign = new CampaignModel({ name, description, status, sentBy: `${FName} ${LName}`, recurrence, sendDateTime });
+    console.log("abbout to save campaign", campaign)
     await campaign.save();
-    console.log("Campaign saved successfully");
+    console.log("Campaign saved successfully", campaign);
 
     // get phone number for each user in Contacts
     const contacts = await Contactsmodel.find({});
@@ -42,7 +41,7 @@ export async function POST(req: Request, res: NextResponse) {
 
     //for each contact, send a message
     for (const contact of contacts) {
-        console.log(contact.phone);
+        // console.log(contact.phone);
         sentTo.push(contact.phone); // Add the recipient to the array
 
         var postData = JSON.stringify({

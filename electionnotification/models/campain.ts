@@ -8,6 +8,8 @@ const campainSchema = new Schema({
     status: { type: String, required: false },
     sentBy: { type: String, required: true },
     sentTo: { type: String, required: false },
+    recurrence: { type: String, required: false },
+    sendDateTime: { type: Date, required: false },
     date: { type: Date, default: Date.now } // Provide Date.now as a reference to the function
 });
 let Campains;
